@@ -1,7 +1,9 @@
 import streamlit as st
-from Modulos.tender_analyzer import TenderModule
+import google.generativeai as genai
+import os
 from PyPDF2 import PdfReader
 
+# 1. Configuración de la Página
 st.set_page_config(page_title="SIEL Pro - Sistema Inteligente", layout="wide")
 
 # 2. Estilos Corporativos (Azul y Dorado)
@@ -28,13 +30,31 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
+# 3. Lógica de la IA (Integrada para evitar errores de importación)
+class SIELBrain:
+    def __init__(self):
+        # Intentamos usar la clave del sistema o la de respaldo
+        api_key = os.getenv("GOOGLE_API_KEY", "AIzaSyARZgTTSfCuH-hHtEPAns062tC3Nzn-QoQ")
+        genai.configure(api_key=api_key.strip())
+        # Usamos el modelo estable gemini-1.5-flash
+        self.model = genai.GenerativeModel('gemini-1.5-flash')
+
+    def consultar(self, prompt, texto):
+        try:
+            contenido = f"{prompt}\n\nTEXTO DEL PLIEGO:\n{texto[:100000]}"
+            response = self.model.generate_content(contenido)
+            return response.text
+        except Exception as e:
+            return f"❌ Error de IA: {str(e)}. Por favor, verifica la conexión o la API Key."
+
 try:
-    ia = TenderModule()
+    siel_ia = SIELBrain()
     motor_listo = True
 except Exception as e:
-    st.error(f"Error al conectar con el cerebro de IA: {e}")
+    st.error(f"Error al inicializar SIEL: {e}")
     motor_listo = False
 
+# 4. Barra Lateral - Navegación y Seguridad
 with st.sidebar:
     st.title("📂 SIEL Pro")
     st.markdown("---")
@@ -58,38 +78,35 @@ with st.sidebar:
     st.markdown("---")
     st.info("Versión 1.0 - Desarrollado por Jenny")
 
+# 5. Ejecución de Módulos
 if modulo:
     st.title(f"Monitor de Licitaciones — {modulo}")
-
     archivo = st.file_uploader("Sube el pliego de condiciones (PDF)", type="pdf")
 
     if archivo and motor_listo:
         if st.button("🚀 INICIAR ANÁLISIS ESTRATÉGICO"):
-            with st.spinner("Analizando el proceso..."):
+            with st.spinner("Analizando el proceso con SIEL Pro..."):
                 reader = PdfReader(archivo)
-                texto = "".join([p.extract_text() for p in reader.pages])
+                texto_pdf = "".join([p.extract_text() for p in reader.pages])
                 
                 if modulo == "🔍 Lectura de Pliegos":
-                    resultado = ia.analizar_proceso_completo(texto)
+                    prompt = "Analiza este pliego y genera un resumen SIEL con: Objeto, Presupuesto, Fechas clave e Indicadores Financieros."
                 elif modulo == "📊 Viabilidad del Proceso":
-                    resultado = ia.analizar_viabilidad(texto)
+                    prompt = "Evalúa la VIABILIDAD de este proceso. ¿Es rentable? ¿Qué requisitos técnicos y financieros son los más difíciles?"
                 elif modulo == "⚠️ Evaluación de Riesgos":
-                    resultado = ia.analizar_riesgos(texto)
+                    prompt = "Identifica RIESGOS jurídicos, financieros o técnicos en este pliego."
                 elif modulo == "🏆 Simulador de Puntuación":
-                    resultado = ia.simular_puntuacion(texto)
+                    prompt = "Extrae los CRITERIOS DE PUNTUACIÓN (Industria nacional, Mipymes, etc)."
                 else:
-                    resultado = "Motor de IA activado para este módulo. Generando respuesta..."
+                    prompt = "Brinda consejos estratégicos para ganar esta licitación según el pliego."
 
+                resultado = siel_ia.consultar(prompt, texto_pdf)
+                
                 st.subheader("Resultado del Análisis")
                 st.markdown(f'<div class="resaltado">{resultado}</div>', unsafe_allow_html=True)
+                st.download_button("Descargar Reporte", resultado, file_name=f"SIEL_{modulo}.txt")
     else:
-        st.info("📩 Para comenzar, sube el PDF del pliego y selecciona un módulo en la barra lateral.")
+        st.info("📩 Para comenzar, sube el PDF del pliego.")
 else:
     st.title("Bienvenido a SIEL Pro")
-    st.warning("🔒 Por favor, ingrese la clave de acceso en la barra lateral para desbloquear las herramientas de análisis.")
-    st.markdown("""
-    **SIEL Pro** es un Sistema Inteligente de Evaluación de Licitaciones diseñado para:
-    - Analizar la viabilidad de procesos públicos y privados.
-    - Identificar riesgos técnicos y jurídicos.
-    - Simular puntuaciones y competitividad.
-    """)
+    st.warning("🔒 Ingrese la clave de acceso para desbloquear las herramientas.")
