@@ -34,7 +34,7 @@ if clave == "1234":
                 
                 if resultado['alertas']:
                     st.warning("⚠️ Alertas Detectadas:")
-                    for alerta in resultado['alerts']:
+                    for alerta in resultado['alertas']:
                         st.write(f"- {alerta}")
                 else:
                     st.success("✅ No se detectaron alertas críticas.")
