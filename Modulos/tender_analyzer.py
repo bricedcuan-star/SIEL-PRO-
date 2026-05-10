@@ -4,7 +4,7 @@ import os
 class TenderModule:
     def __init__(self):
         # PEGA AQUÍ TU NUEVA LLAVE
-        api_key = "TU_NUEVA_LLAVE_AQUI"
+        api_key = "AIzaSyARZgTTSfCuH-hHtEPAns062tC3Nzn-QoQ"
         
         genai.configure(api_key=api_key)
         
