@@ -1,6 +1,6 @@
 import streamlit as st
 import os
-from Modulos.ia_engine import IAEngine
+from Modulos.tender_analyzer import IAEngine
 
 # Configuración de la página
 st.set_page_config(page_title="SIEL-PRO Web", page_icon="🛡️")
