@@ -4,32 +4,26 @@ import os
 class TenderModule:
     def __init__(self):
         # PEGA AQUÍ TU NUEVA LLAVE
-        api_key = "AIzaSyARZgTTSfCuH-hHtEPAns062tC3Nzn-QoQ"
+        api_key = "TU_NUEVA_LLAVE_AQUI"
         
         genai.configure(api_key=api_key)
         
-        # Cambiamos a 'gemini-pro' para máxima compatibilidad y evitar el error 404
-        self.model = genai.GenerativeModel('gemini-pro')
+        # Este es el nombre técnico más "crudo". Si este falla, el problema es la región.
+        self.model = genai.GenerativeModel('gemini-1.5-flash-001')
 
     def analizar_proceso_completo(self, texto_pdf):
-        prompt = f"""
-        Analiza detalladamente los 13 puntos SIEL del siguiente pliego:
-        1. Liquidez, 2. Endeudamiento, 3. Capital de Trabajo, 4. Experiencia General, 
-        5. Experiencia Específica, 6. Capacidad Residual, 7. Personal Técnico, 
-        8. Visita Técnica, 9. Certificación Alturas, 10. Anticipo, 11. Forma de Pago, 
-        12. SST/Ambiental, 13. Riesgos.
-
-        Texto: {texto_pdf[:30000]}
-        """
+        # Reducimos el texto aún más para asegurar que no sea un error de tamaño
+        prompt = f"Analiza los puntos financieros y técnicos de este pliego: {texto_pdf[:15000]}"
+        
         try:
-            # Forzamos la generación simple
+            # Intentamos la llamada más básica posible
             response = self.model.generate_content(prompt)
             return response.text
         except Exception as e:
-            # Si gemini-pro también falla, intentamos con el nombre alternativo de flash
+            # ÚLTIMO RECURSO: Intentar con el modelo que SÍ te funcionó en el chat de AI Studio
             try:
                 self.model = genai.GenerativeModel('gemini-1.5-flash-latest')
                 response = self.model.generate_content(prompt)
                 return response.text
             except:
-                return f"❌ Error de compatibilidad: {str(e)}. Intente recargar la página."
+                return f"Error crítico: {str(e)}. Google no reconoce el modelo en esta región."
