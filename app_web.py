@@ -1,42 +1,59 @@
 import streamlit as st
-import os
 from Modulos.tender_analyzer import TenderModule
 
-# Configuración de la página
-st.set_page_config(page_title="SIEL-PRO Web", page_icon="🛡️")
+st.set_page_config(page_title="SIEL-PRO Dashboard", layout="wide")
 
-st.title("🛡️ SIEL-PRO: Inteligencia en Licitaciones")
+# --- ESTILOS PERSONALIZADOS (Para que se vea pro) ---
+st.markdown("""
+    <style>
+    .main { background-color: #f5f7f9; }
+    .stMetric { background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    </style>
+    """, unsafe_allow_html=True)
 
-# Inicializar motor
-ia = TenderModule()
-
-# Barra lateral
+# --- MENÚ LATERAL ---
 with st.sidebar:
-    st.header("Acceso al Sistema")
-    clave = st.text_input("Ingrese Clave de Acceso", type="password")
+    st.image("https://cdn-icons-png.flaticon.com/512/583/583345.png", width=50) # Icono de ejemplo
+    st.title("SIEL-PRO")
+    st.radio("Navegación", ["Resumen", "Documentos", "Análisis", "Riesgos"])
 
-if clave == "1234":
-    st.success("✅ Acceso Concedido")
+# --- CUERPO PRINCIPAL ---
+st.header("Resumen de Evaluación")
 
-    archivo_subido = st.file_uploader("Suba el pliego de condiciones (PDF)", type="pdf")
+col1, col2, col3 = st.columns([1, 1, 1])
 
-    if archivo_subido is not None:
-        if st.button("🚀 Iniciar Análisis de IA"):
-            with st.spinner("Analizando licitación..."):
-                # Simulamos los datos para la función que ya tienes
-                datos_ficticios = {"presupuesto": 600000000, "objeto": "CONSTRUCCIÓN DE FACHADAS"}
-                
-                # LLAMADA A TU FUNCIÓN REAL
-                resultado = ia.analizar_proceso_completo(datos_ficticios)
+with col1:
+    st.metric(label="PUNTUACIÓN TOTAL", value="92.4 / 100", delta="Alta probabilidad")
 
-                st.subheader("🔍 Resultado del Análisis")
-                st.info(f"Estado de Viabilidad: {resultado['viabilidad']}")
-                
-                if resultado['alertas']:
-                    st.warning("⚠️ Alertas Detectadas:")
-                    for alerta in resultado['alertas']:
-                        st.write(f"- {alerta}")
-                else:
-                    st.success("✅ No se detectaron alertas críticas.")
-else:
-    st.info("🔑 Por favor, ingrese su clave en la barra lateral para comenzar.")
+with col2:
+    st.metric(label="CLASIFICACIÓN", value="A", delta="Muy Competitiva")
+
+with col3:
+    st.metric(label="PROBABILIDAD DE ÉXITO", value="92%", delta="Muy Alta")
+
+st.divider()
+
+# --- SECCIÓN DE CRITERIOS ---
+col_left, col_right = st.columns(2)
+
+with col_left:
+    st.subheader("Evaluación por Criterio")
+    criterios = {
+        "Experiencia del Oferente": 0.95,
+        "Capacidad Técnica": 0.90,
+        "Metodología": 0.93,
+        "Equipo de Trabajo": 0.88
+    }
+    for nombre, valor in criterios.items():
+        st.write(f"{nombre} ({int(valor*100)}%)")
+        st.progress(valor)
+
+with col_right:
+    st.subheader("Análisis de Riesgos")
+    st.warning("⚠️ MEDIO: Requisito de experiencia específica.")
+    st.success("✅ BAJO: Garantías y seguros.")
+    st.success("✅ BAJO: Plazo de ejecución.")
+
+# --- BOTÓN DE ACCIÓN ---
+if st.button("Exportar Informe PDF"):
+    st.balloons()
