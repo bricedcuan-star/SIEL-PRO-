@@ -38,39 +38,58 @@ except Exception as e:
 with st.sidebar:
     st.title("📂 SIEL Pro")
     st.markdown("---")
-    modulo = st.radio("Menú de Estrategia", [
-        "🔍 Lectura de Pliegos",
-        "📊 Viabilidad del Proceso",
-        "⚠️ Evaluación de Riesgos",
-        "🏆 Simulador de Puntuación",
-        "✅ Checklist Documental",
-        "🤖 Asistente IA"
-    ])
+    clave_acceso = st.text_input("Clave de Acceso", type="password")
+    
+    if clave_acceso == "SIEL_2026*Pro":
+        st.success("Acceso Concedido")
+        modulo = st.radio("Menú de Estrategia", [
+            "🔍 Lectura de Pliegos",
+            "📊 Viabilidad del Proceso",
+            "⚠️ Evaluación de Riesgos",
+            "🏆 Simulador de Puntuación",
+            "✅ Checklist Documental",
+            "🤖 Asistente IA"
+        ])
+    else:
+        if clave_acceso:
+            st.error("Clave incorrecta")
+        modulo = None
+    
     st.markdown("---")
     st.info("Versión 1.0 - Desarrollado por Jenny")
 
-st.title(f"Monitor de Licitaciones — {modulo}")
+if modulo:
+    st.title(f"Monitor de Licitaciones — {modulo}")
 
-archivo = st.file_uploader("Sube el pliego de condiciones (PDF)", type="pdf")
+    archivo = st.file_uploader("Sube el pliego de condiciones (PDF)", type="pdf")
 
-if archivo and motor_listo:
-    if st.button("🚀 INICIAR ANÁLISIS ESTRATÉGICO"):
-        with st.spinner("Analizando el proceso..."):
-            reader = PdfReader(archivo)
-            texto = "".join([p.extract_text() for p in reader.pages])
-            
-            if modulo == "🔍 Lectura de Pliegos":
-                resultado = ia.analizar_proceso_completo(texto)
-            elif modulo == "📊 Viabilidad del Proceso":
-                resultado = ia.analizar_viabilidad(texto)
-            elif modulo == "⚠️ Evaluación de Riesgos":
-                resultado = ia.analizar_riesgos(texto)
-            elif modulo == "🏆 Simulador de Puntuación":
-                resultado = ia.simular_puntuacion(texto)
-            else:
-                resultado = "Motor de IA activado para este módulo. Generando respuesta..."
+    if archivo and motor_listo:
+        if st.button("🚀 INICIAR ANÁLISIS ESTRATÉGICO"):
+            with st.spinner("Analizando el proceso..."):
+                reader = PdfReader(archivo)
+                texto = "".join([p.extract_text() for p in reader.pages])
+                
+                if modulo == "🔍 Lectura de Pliegos":
+                    resultado = ia.analizar_proceso_completo(texto)
+                elif modulo == "📊 Viabilidad del Proceso":
+                    resultado = ia.analizar_viabilidad(texto)
+                elif modulo == "⚠️ Evaluación de Riesgos":
+                    resultado = ia.analizar_riesgos(texto)
+                elif modulo == "🏆 Simulador de Puntuación":
+                    resultado = ia.simular_puntuacion(texto)
+                else:
+                    resultado = "Motor de IA activado para este módulo. Generando respuesta..."
 
-            st.subheader("resultado del Análisis")
-            st.markdown(f'<div class="resaltado">{resultado}</div>', unsafe_allow_html=True)
+                st.subheader("Resultado del Análisis")
+                st.markdown(f'<div class="resaltado">{resultado}</div>', unsafe_allow_html=True)
+    else:
+        st.info("📩 Para comenzar, sube el PDF del pliego y selecciona un módulo en la barra lateral.")
 else:
-    st.info("📩 Para comenzar, sube el PDF del pliego y selecciona un módulo en la barra lateral.")
+    st.title("Bienvenido a SIEL Pro")
+    st.warning("🔒 Por favor, ingrese la clave de acceso en la barra lateral para desbloquear las herramientas de análisis.")
+    st.markdown("""
+    **SIEL Pro** es un Sistema Inteligente de Evaluación de Licitaciones diseñado para:
+    - Analizar la viabilidad de procesos públicos y privados.
+    - Identificar riesgos técnicos y jurídicos.
+    - Simular puntuaciones y competitividad.
+    """)
