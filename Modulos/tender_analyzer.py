@@ -6,7 +6,7 @@ class TenderModule:
         # Configuramos la IA (usará la clave que pusiste en Secrets)
         api_key = os.getenv("GEMINI_API_KEY")
         genai.configure(api_key=api_key)
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+        self.model = genai.GenerativeModel('models/gemini-1.5-flash')
 
     def analizar_proceso_completo(self, texto_pdf):
         """
