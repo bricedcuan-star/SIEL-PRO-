@@ -4,28 +4,29 @@ import streamlit as st
 
 class TenderModule:
     def __init__(self):
-        # Intentamos obtenerla de 3 formas distintas
-        api_key = os.getenv("GEMINI_API_KEY") 
+        # --- SOLUCIÓN DIRECTA ---
+        # Pega tu clave de Google AI Studio entre las comillas:
+        api_key = "AIzaSyDheHzT1xdTKyplmVA_kkw762gqrP2oBss"
         
-        # Si no la encuentra, intentamos buscarla en st.secrets (forma interna de Streamlit)
-        if not api_key:
-            try:
-                api_key = st.secrets["GEMINI_API_KEY"]
-            except:
-                api_key = None
-
-        if not api_key:
-            # Este mensaje aparecerá en la consola para ayudarte a debuguear
-            print("⚠️ ADVERTENCIA: No se detectó la API KEY")
-            return # Salimos sin dar error fatal
-
         genai.configure(api_key=api_key)
         self.model = genai.GenerativeModel('gemini-1.5-flash')
 
     def analizar_proceso_completo(self, texto_pdf):
-        if not hasattr(self, 'model'):
-            return "❌ Error: La IA no está configurada. Revisa la API KEY en los Secrets."
+        # Prompt mejorado para que el informe sea profesional
+        prompt = f"""
+        Actúa como un Consultor Experto en Licitaciones SIEL. 
+        Analiza el siguiente pliego de condiciones y extrae detalladamente los 13 puntos de control:
+        1. Liquidez, 2. Endeudamiento, 3. Capital de Trabajo, 4. Experiencia General, 
+        5. Experiencia Específica, 6. Capacidad Residual (K/R), 7. Personal Técnico, 
+        8. Visita Técnica, 9. Certificación en Alturas, 10. Anticipo, 11. Forma de Pago, 
+        12. SST y Ambiental, 13. Riesgos Contractuales.
+
+        Texto del pliego:
+        {texto_pdf[:30000]}
+        """
         
-        prompt = f"Analiza los 13 puntos SIEL del siguiente pliego: {texto_pdf[:30000]}"
-        response = self.model.generate_content(prompt)
-        return response.text
+        try:
+            response = self.model.generate_content(prompt)
+            return response.text
+        except Exception as e:
+            return f"❌ Error de conexión con la IA: {str(e)}"
