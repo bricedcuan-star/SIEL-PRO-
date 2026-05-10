@@ -1,1 +1,76 @@
-aW1wb3J0IHN0cmVhbWxpdCBhcyBzdApmcm9tIE1vZHVsb3MudGVuZGVyX2FuYWx5emVyIGltcG9ydCBUZW5kZXJNb2R1bGUKZnJvbSBQeVBERjIgaW1wb3J0IFBkZlJlYWRlcgoKc3Quc2V0X3BhZ2VfY29uZmlnKHBhZ2VfdGl0bGU9IlNJRUwgUHJvIC0gU2lzdGVtYSBJbnRlbGlnZW50ZSIsIGxheW91dD0id2lkZSIpCgojIEVTVElMT1MgQVpVTCBZIERPUkFETwpzdC5tYXJrZG93bigiIiIKICAgIDxzdHlsZT4KICAgIC5tYWluIHsgYmFja2dyb3VuZC1jb2xvcjogI2Y0ZjdmOTsgfQogICAgW2RhdGEtdGVzdGlkPSJzdFNpZGViYXIiXSB7IGJhY2tncm91bmQtY29sb3I6ICMxRTNBOEE7IH0KICAgIFtkYXRhLXRlc3RpZD0ic3RTaWRlYmFyIl0gKiB7IGNvbG9yOiB3aGl0ZSAhaW1wb3J0YW50OyB9CiAgICBoMSwgaDIsIGgzIHsgY29sb3I6ICMxRTNBOEEgIWltcG9ydGFudDsgfQogICAgLnN0QnV0dG9uPmJ1dHRvbiB7IAogICAgICAgIGJvcmRlcjogMnB4IHNvbGlkICNENEFGMzc7IAogICAgICAgIGNvbG9yOiAjMUUzQThBOyAKICAgICAgICBmb250LXdlaWdodDogYm9sZDsgCiAgICAgICAgd2lkdGg6IDEwMCU7CiAgICAgICAgYm9yZGVyLXJhZGl1czogMTBweDsKICAgIH0KICAgIC5yZXNhbHRhZG8gewogICAgICAgIGJvcmRlci1sZWZ0OiAxMHB4IHNvbGlkICNENEFGMzc7CiAgICAgICAgcGFkZGluZzoyMHB4OwogICAgICAgIGJhY2tncm91bmQ6d2hpdGU7CiAgICAgICAgYm9yZGVyLXJhZGl1czogNXB4OwogICAgICAgIGJveC1zaGFkb3c6IDJweCAycHggMTBweCByZ2JhKDAsMCwwLDAuMSk7CiAgICB9CiAgICA8L3N0eWxlPgogICAgIiIiLCB1bnNhZmV_YWxsb3dfaHRtbD1UcnVlKQoKdHJ5OgogICAgaWEgPSBUZW5kZXJNb2R1bGUoKQogICAgbW90b3JfbGlzdG8gPSBUcnVlCmV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgIHN0LmVycm9yKGYiRXJyb3IgYWwgY29uZWN0YXIgY29uIGVsIGNlcmVicm8gZGUgSUE6IHtffSIpCiAgICBtb3Rvcl9saXN0byA9IEZhbHNlCgp3aXRoIHN0LnNpZGViYXI6CiAgICBzdC50aXRsZSgi8J+uh++4jyBTSUVMIFBybyIpCiAgICBzdC5tYXJrZG93bigiLS0tIikKICAgIG1vZHVsbyA9IHN0LnJhZGlvKCJNZW7DuiBkZSBFc3RyYXRlZ2lhIiwgWwogICAgICAgICLwn5OSIExlY3R1cmEgZGUgUGxpZWdvcyIsCiAgICAgICAgIvCfjqogVmlhYmlsaWRhZCBkZWwgUHJvY2VzbyIsCiAgICAgICAgIuKaoO+4jyBFdmFsdWFjacOzbiBkZSBSaWVzZ29zIiwKICAgICAgICAivJ+PhyBTaW11bGFkb3IgZGUgUHVudFVhY2nDs24iLAogICAgICAgICLinI0gQ2hlY2tsaXN0IERvY3VtZW50YWwiLAogICAgICAgICLwn5C+IEFzaXN0ZW50ZSBJQSIKICAgIF0pCiAgICBzdC5tYXJrZG93bigiLS0tIikKICAgIHN0LmluZm8oIlZlcnNpw7NuIDEuMCAtIERlc2Fycm9sbGFkbyBwb3IgSmVubnkiKQoKc3QudGl0bGUoZiJNb25pdG9yZW8gZGUgUHJvY2Vzb3Mg4oCUIHttb2R1bG99IikKCmFyY2hpdm8gPSBzdC5maWxlX3VwbG9hZGVyKCJTdWJlIGVsIHBsaWVnbyBkZSBjb25kaWNpb25lcyAoUERGKSIsIHR5cGU9InBkZiIpCgppZiBhcmNoaXZvIGFuZCBtb3Rvcl9saXN0bzoKICAgIGlmIHN0LmJ1dHRvbigi8J+agCBJTklDSUFSIEE0w4FMSVNJUyBFU1RSQVRFf0dJQ08iKToKICAgICAgICB3aXRoIHN0LnNwaW5uZXIoIkFuYWxpemFuZG8gZWwgcHJvY2Vzby4uLiIpOgogICAgICAgICAgICByZWFkZXIgPSBQZGZSZWFkZXIoYXJjaGl2bykKICAgICAgICAgICAgdGV4dG8gPSAiIi5qb2luKFtwLmV4dHJhY3RfdGV4dCgpIGZvciBwIGluIHJlYWRlci5wYWdlc10pCiAgICAgICAgICAgIAogICAgICAgICAgICBpZiBtb2R1bG8gPT0gIvCfk5kgTGVjdHVyYSBkZSBQbGllZ29zIjoKICAgICAgICAgICAgICAgIHJlc3VsdGFkbyA9IGlhLmFuYWxpemFyX3Byb2Nlc29fY29tcGxldG8odGV4dG8pCiAgICAgICAgICAgIGVsaWYgbW9kdWxvID09ICLwn46qIFZpYWJpbGlkYWQgZGUvIFByb2Nlc28iOgogICAgICAgICAgICAgICAgcmVzdWx0YWRvID0gaWEuYW5hbGl6YXJfdmlhYmlsaWRhZCh0ZXh0bykKICAgICAgICAgICAgZWxpZiBtb2R1bG8gPT0gIuKaoO+4jyBFdmFsdWFjacOzbiBkZSBSaWVzZ29zIjoKICAgICAgICAgICAgICAgIHJlc3VsdGFkbyA9IGlhLmFuYWxpemFyX3Byb2Nlc29fcmllc2dvcyh0ZXh0bykKICAgICAgICAgICAgZWxpZiBtb2R1bG8gPT0gIvCfj4cgU2ltdWxhZG9yIGRlIFB1bnRVYWNpw7NuIjoKICAgICAgICAgICAgICAgIHJlc3VsdGFkbyA9IGlhLnNpbXVsYXJfcHVudHVhY2lvbih0ZXh0bykKICAgICAgICAgICAgZWxzZToKICAgICAgICAgICAgICAgIHJlc3VsdGFkbyA9ICJNb3RvciBkZSBJQSBhY3RpdmFkbyBwYXJhIGVzdGUgbcOzZHVsby4gR2VuZXJhbmRvIHJlc3B1ZXN0YS4uLiIKCiAgICAgICAgICAgIHN0LnN1YmhlYWRlcigicmVzdWx0YWRvIGRlbCBBbsOhbGlzaXMiKQogICAgICAgICAgICBzdC5tYXJrZG93bihmJzxkaXYgY2xhc3M9InJlc2FsdGFkbyI+e3Jlc3VsdGFkb308L2Rpdj4nLCB1bnNhZmV_YWxsb3dfaHRtbD1UcnVlKQplbHNlOgogICAgc3QuaW5mbygi8J+SmiBQYXJhIGNvbWVuemFyLCBzdWJlIGVsIFBERiBkZWwgcGxpZWdvIHkgc2VsZWNjaW9uYSB1biBtw7NkdWxvIGVuIGxhIGJhcnJhIGxhdGVyYWwuIikK
+import streamlit as st
+from Modulos.tender_analyzer import TenderModule
+from PyPDF2 import PdfReader
+
+st.set_page_config(page_title="SIEL Pro - Sistema Inteligente", layout="wide")
+
+# 2. Estilos Corporativos (Azul y Dorado)
+st.markdown("""
+    <style>
+    .main { background-color: #f4f7f9; }
+    [data-testid="stSidebar"] { background-color: #1E3A8A; }
+    [data-testid="stSidebar"] * { color: white !important; }
+    h1, h2, h3 { color: #1E3A8A !important; }
+    .stButton>button { 
+        border: 2px solid #D4AF37; 
+        color: #1E3A8A; 
+        font-weight: bold; 
+        width: 100%;
+        border-radius: 10px;
+    }
+    .resaltado {
+        border-left: 10px solid #D4AF37;
+        padding: 20px;
+        background: white;
+        border-radius: 5px;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+try:
+    ia = TenderModule()
+    motor_listo = True
+except Exception as e:
+    st.error(f"Error al conectar con el cerebro de IA: {e}")
+    motor_listo = False
+
+with st.sidebar:
+    st.title("📂 SIEL Pro")
+    st.markdown("---")
+    modulo = st.radio("Menú de Estrategia", [
+        "🔍 Lectura de Pliegos",
+        "📊 Viabilidad del Proceso",
+        "⚠️ Evaluación de Riesgos",
+        "🏆 Simulador de Puntuación",
+        "✅ Checklist Documental",
+        "🤖 Asistente IA"
+    ])
+    st.markdown("---")
+    st.info("Versión 1.0 - Desarrollado por Jenny")
+
+st.title(f"Monitor de Licitaciones — {modulo}")
+
+archivo = st.file_uploader("Sube el pliego de condiciones (PDF)", type="pdf")
+
+if archivo and motor_listo:
+    if st.button("🚀 INICIAR ANÁLISIS ESTRATÉGICO"):
+        with st.spinner("Analizando el proceso..."):
+            reader = PdfReader(archivo)
+            texto = "".join([p.extract_text() for p in reader.pages])
+            
+            if modulo == "🔍 Lectura de Pliegos":
+                resultado = ia.analizar_proceso_completo(texto)
+            elif modulo == "📊 Viabilidad del Proceso":
+                resultado = ia.analizar_viabilidad(texto)
+            elif modulo == "⚠️ Evaluación de Riesgos":
+                resultado = ia.analizar_riesgos(texto)
+            elif modulo == "🏆 Simulador de Puntuación":
+                resultado = ia.simular_puntuacion(texto)
+            else:
+                resultado = "Motor de IA activado para este módulo. Generando respuesta..."
+
+            st.subheader("resultado del Análisis")
+            st.markdown(f'<div class="resaltado">{resultado}</div>', unsafe_allow_html=True)
+else:
+    st.info("📩 Para comenzar, sube el PDF del pliego y selecciona un módulo en la barra lateral.")
