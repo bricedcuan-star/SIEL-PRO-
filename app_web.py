@@ -33,11 +33,13 @@ st.markdown("""
 # 3. Lógica de la IA (Integrada para evitar errores de importación)
 class SIELBrain:
     def __init__(self):
-        # Intentamos usar la clave del sistema o la de respaldo
         api_key = os.getenv("GOOGLE_API_KEY", "AIzaSyARZgTTSfCuH-hHtEPAns062tC3Nzn-QoQ")
         genai.configure(api_key=api_key.strip())
-        # Usamos el modelo estable gemini-1.5-flash
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+        # Intentamos con 1.5 flash, si no con pro
+        try:
+            self.model = genai.GenerativeModel('gemini-1.5-flash')
+        except:
+            self.model = genai.GenerativeModel('gemini-pro')
 
     def consultar(self, prompt, texto):
         try:
@@ -45,7 +47,13 @@ class SIELBrain:
             response = self.model.generate_content(contenido)
             return response.text
         except Exception as e:
-            return f"❌ Error de IA: {str(e)}. Por favor, verifica la conexión o la API Key."
+            # Fallback a gemini-pro si falla flash
+            try:
+                alt_model = genai.GenerativeModel('gemini-pro')
+                response = alt_model.generate_content(f"{prompt}\n\nTEXTO:\n{texto[:30000]}")
+                return response.text
+            except:
+                return f"❌ Error de IA: {str(e)}. Verifica tu API Key en Google AI Studio."
 
 try:
     siel_ia = SIELBrain()
