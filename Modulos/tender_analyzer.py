@@ -3,28 +3,31 @@ import os
 
 class TenderModule:
     def __init__(self):
-        # 1. PEGA TU NUEVA LLAVE AQUÍ
+        # 1. PEGA TU NUEVA LLAVE AQUÍ (Asegúrate de que no tenga espacios)
         raw_key = "AIzaSyARZgTTSfCuH-hHtEPAns062tC3Nzn-QoQ"
-        
-        # 2. LIMPIEZA Y CONFIGURACIÓN
         api_key = raw_key.strip()
+        
         genai.configure(api_key=api_key)
         
-        # Usamos el modelo más estable para evitar el error 404
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+        # 2. Intentamos cargar el modelo con el nombre más compatible
+        try:
+            self.model = genai.GenerativeModel('gemini-1.5-flash-latest')
+        except:
+            self.model = genai.GenerativeModel('gemini-pro')
 
     def analizar_proceso_completo(self, texto_pdf):
-        prompt = f"""
-        Actúa como un experto en licitaciones. Analiza los 13 puntos SIEL:
-        1. Liquidez, 2. Endeudamiento, 3. Capital de Trabajo, 4. Experiencia General, 
-        5. Experiencia Específica, 6. Capacidad Residual, 7. Personal Técnico, 
-        8. Visita Técnica, 9. Certificación Alturas, 10. Anticipo, 11. Forma de Pago, 
-        12. SST/Ambiental, 13. Riesgos.
+        # Reducimos un poco el texto para evitar errores de saturación
+        prompt = f"Analiza los 13 puntos SIEL de este pliego: {texto_pdf[:20000]}"
         
-        Texto: {texto_pdf[:25000]}
-        """
         try:
+            # Intentamos la generación
             response = self.model.generate_content(prompt)
             return response.text
         except Exception as e:
-            return f"❌ Error en la IA: {str(e)}"
+            # Si falla el nombre 'flash-latest', intentamos con el nombre corto
+            try:
+                alternativo = genai.GenerativeModel('gemini-1.5-flash')
+                response = alternativo.generate_content(prompt)
+                return response.text
+            except:
+                return f"❌ Error final de conexión: {str(e)}. Verifica que la API Key esté activa en Google AI Studio."
