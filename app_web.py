@@ -32,7 +32,7 @@ if clave == "1234":
                 st.subheader("🔍 Resultado del Análisis")
                 st.info(f"Estado de Viabilidad: {resultado['viabilidad']}")
                 
-                if resultado['alerts']:
+                if resultado['alertas']:
                     st.warning("⚠️ Alertas Detectadas:")
                     for alerta in resultado['alerts']:
                         st.write(f"- {alerta}")
