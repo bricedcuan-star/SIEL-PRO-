@@ -9,15 +9,21 @@ st.set_page_config(page_title="SIEL Pro", layout="wide")
 # Lógica de conexión segura
 def inicializar_ia():
     try:
-        api_key = st.secrets.get("GEMINI_API_KEY", "")
+        # Buscamos la clave que ya tienes guardada en Secrets
+        api_key = st.secrets.get("GEMINI_API_KEY")
+        
         if api_key:
-            # Forzamos la configuración para que no use rutas viejas
+            # Configuración limpia
             genai.configure(api_key=api_key.strip())
-            # Usamos el modelo sin prefijos de versión
+            
+            # Llamamos al modelo directamente sin prefijos de versión
             return genai.GenerativeModel('gemini-1.5-flash')
-    except Exception:
+        else:
+            st.error("🔑 No se encontró la clave GEMINI_API_KEY en Secrets.")
+            return None
+    except Exception as e:
+        st.error(f"Error de configuración: {e}")
         return None
-    return None
 
 model = inicializar_ia()
 
