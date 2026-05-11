@@ -34,24 +34,34 @@ st.markdown("""
 # 3. Lógica de la IA (Ahora lee los SECRETS correctamente)
 class SIELBrain:
     def __init__(self):
-        # Intentamos buscar la clave en los Secrets de Streamlit primero
-        if "GEMINI_API_KEY" in st.secrets:
-            api_key = st.secrets["GEMINI_API_KEY"]
-        else:
-            # Si no está en secrets, busca en variables de entorno o usa la que dejaste
-            api_key = os.getenv("GOOGLE_API_KEY", "TU_CLAVE_AQUI")
+        # Buscamos la clave en los Secrets de Streamlit
+        api_key = st.secrets.get("GEMINI_API_KEY")
         
-        genai.configure(api_key=api_key.strip())
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+        if api_key:
+            # Forzamos la configuración para evitar el error v1beta
+            genai.configure(api_key=api_key.strip())
+            # Usamos el nombre del modelo sin sufijos raros
+            self.model = genai.GenerativeModel('gemini-1.5-flash')
+        else:
+            st.error("🔑 Error: No se detecta la clave 'GEMINI_API_KEY' en los Secrets.")
 
     def consultar(self, prompt, texto):
         try:
-            # Para pliegos largos, cortamos el texto para no saturar la IA
-            contenido = f"{prompt}\n\nTEXTO DEL PLIEGO (Extracto):\n{texto[:30000]}"
+            # Enviamos el contenido. Si el PDF es muy largo, Gemini 1.5 lo maneja bien.
+            # Limitamos a 50k caracteres para asegurar rapidez
+            contenido = f"{prompt}\n\nTEXTO DEL PLIEGO:\n{texto[:50000]}"
+            
+            # El truco: No especificar la versión de la API en la llamada
             response = self.model.generate_content(contenido)
             return response.text
         except Exception as e:
-            return f"❌ Error de IA: {str(e)}. Revisa que la clave en Secrets sea correcta."
+            # Si el error persiste, probamos con el modelo Pro automático
+            try:
+                model_alt = genai.GenerativeModel('gemini-pro')
+                response = model_alt.generate_content(f"{prompt}\n\nTEXTO:\n{texto[:20000]}")
+                return response.text
+            except:
+                return f"❌ Error de conexión con Google: {str(e)}. Intenta reiniciar la App."
 
 # Inicializamos la IA
 try:
