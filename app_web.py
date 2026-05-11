@@ -1,19 +1,53 @@
-class SIELBrain:
-    def __init__(self):
-        api_key = st.secrets.get("GEMINI_API_KEY")
-        if api_key:
-            # ESTA LÍNEA ES LA CLAVE: Forzamos la versión estable v1
-            os.environ["GOOGLE_API_USE_V1BETA"] = "0" 
-            genai.configure(api_key=api_key.strip())
-            self.model = genai.GenerativeModel('gemini-1.5-flash')
-        else:
-            st.error("🔑 Error: Revisa los Secrets en Streamlit.")
+import streamlit as st
+import google.generativeai as genai
+import os
+from PyPDF2 import PdfReader
 
-    def consultar(self, prompt, texto):
-        try:
-            # Optimizamos el texto para que la IA no se sature
-            fragmento = texto[:40000] 
-            response = self.model.generate_content(f"{prompt}\n\nPLIEGO:\n{fragmento}")
-            return response.text
-        except Exception as e:
-            return f"❌ Error: {str(e)}. Intenta reiniciar la App en 'Manage App'."
+# Configuración inicial (Debe ser lo primero)
+st.set_page_config(page_title="SIEL Pro", layout="wide")
+
+# Lógica de conexión segura
+def inicializar_ia():
+    try:
+        api_key = st.secrets.get("GEMINI_API_KEY", "")
+        if api_key:
+            genai.configure(api_key=api_key.strip())
+            return genai.GenerativeModel('gemini-1.5-flash')
+    except Exception:
+        return None
+    return None
+
+model = inicializar_ia()
+
+# Interfaz básica para que no se quede en blanco
+st.title("📂 SIEL Pro - Análisis de Pliegos")
+
+with st.sidebar:
+    st.header("Configuración")
+    clave = st.text_input("Clave de Acceso", type="password")
+    if clave == "SIEL_2026*Pro":
+        st.success("Acceso Concedido")
+        modo = st.radio("Menú", ["Análisis de Viabilidad", "Resumen de Pliego"])
+    else:
+        modo = None
+
+if modo:
+    archivo = st.file_uploader("Sube el PDF de 500 páginas", type="pdf")
+    if archivo and st.button("🚀 Iniciar IA"):
+        with st.spinner("Leyendo y filtrando viabilidad..."):
+            try:
+                reader = PdfReader(archivo)
+                # Solo leemos las primeras 50 páginas para no romper la memoria
+                texto = ""
+                for i in range(min(50, len(reader.pages))):
+                    texto += reader.pages[i].extract_text()
+                
+                if model:
+                    res = model.generate_content(f"Analiza la viabilidad financiera de este pliego: {texto[:30000]}")
+                    st.write(res.text)
+                else:
+                    st.error("La IA no está configurada en Secrets.")
+            except Exception as e:
+                st.error(f"Error: {e}")
+else:
+    st.info("Por favor, ingresa la clave en la barra lateral para desbloquear.")
