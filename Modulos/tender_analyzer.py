@@ -1,1 +1,29 @@
-aW1wb3J0IGdvb2dsZS5nZW5lcmF0aXZlYWkgYXMgZ2VuYWkKaW1wb3J0IG9zCgpjbGFzcyBUZW5kZXJNb2R1bGU6CiAgICBkZWYgX19pbml0X18oc2VsZik6CiAgICAgICAgIyBMZWVtb3MgbGEgY2xhdmUgZGVzZGUgdW5hIHZhcmlhYmxlIGRlIGVudG9ybm8gcG9yIHNlZ3VyaWRhZAogICAgICAgIGFwaV9rZXkgPSBvcy5nZXRlbnYoIkdPT0dMRV9BUElfS0VZIikKICAgICAgICAKICAgICAgICBpZiBub3QgYXBpX2tleToKICAgICAgICAgICAgIyBTaSBubyBoYXkgdmFyaWFibGUgZGUgZW50b3JubywgaW50ZW50YW1vcyBjb24gbGEgcXVlIHRlbsOtYXMgcGVybyBhdmlzYW5kbwogICAgICAgICAgICBhcGlfa2V5ID0gIkFJegFTeUFSWmdUVFNmQ3VILWhIdEVQQW5zMDYydEMzTnpuLVFvUSIgCiAgICAgICAgICAgIAogICAgICAgIGdlbmFpLmNvbmZpZ3VyZShhcGlfa2V5PWFwaV9rZXkuc3RyaXAoKSkKICAgICAgICBzZWxmLm1vZGVsID0gZ2VuYWkuR2VuZXJhdGl2ZU1vZGVsKCdnZW1pbmktMS41LWZsYXNoJykKCiAgICBkZWYgX2NvbnN1bHRhcl9pYShzZWxmLCBwcm9tcHQsIHRleHRvKToKICAgICAgICAjIEFtcGxpYW1vcyBlbCByYW5nbyBkZSBsZWN0dXJhIHBhcmEgcGxpZWdvcyBsYXJnb3MKICAgICAgICBjb250ZW5pZG8gPSBmIntwcm9tcHR9XG5cblRFWFRPIERFTCBQTElFR086XG57dGV4dG9bOjEwMDAwMF19IgogICAgICAgIHRyeToKICAgICAgICAgICAgcmVzcG9uc2UgPSBzZWxmLm1vZGVsLmdlbmVyYXRlX2NvbnRlbnQoY29udGVuaWRvKQogICAgICAgICAgICByZXR1cm4gcmVzcG9uc2UudGV4dAogICAgICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICAgICAgcmV0dXJuIGYizpQgRXJyb3IgZGUgSUE6IHtzdHIoZSl9IgoKICAgIGRlZiBhbmFsaXphcl92aWFiaWxpZGFkKHNlbGYsIHRleHRvX3BkZik6CiAgICAgICAgcHJvbXB0ID0gIkFjdMO6YSBjb21vIGV4cGVydG8gZW4gbGljaXRhY2lvbmVzIGVuIENvbG9tYmlhLiBFdmFsw7phIGxhIFZJQUJJTElEQUQgZGUgZXN0ZSBwcm9jZXNvLiDCsEVzIHJlbnRhYmxlPyDCv1F1w6kgcmVxdWlzaXRvcyB0w6ljbmljb3MgeSBmaW5hbmNpZXJvcyBzb24gbG9zIG3FcyBkZWPDrWNpbGVzPyIKICAgICAgICByZXR1cm4gc2VsZi5fY29uc3VsdGFyX2lhKHBycm9tcHQsIHRleHRvX3BkZikKCiAgICBkZWYgYW5hbGl6YXJfcmllc2dvcyhzZWxmLCB0ZXh0b19wZGYpOgogICAgICAgIHByb21wdCA9ICJJZGVudGlmaWNhIFJJRVNHT1MganVyw61kaWNvcywgZmluYW5jaWVyb3MgbyB0w6ljbmljb3MgZW4gZXN0ZSBwbGllZ28gcXVlIHB1ZWRhbiBssemFyIGFsIHJlY2hhem8gZGUgbGEgb2ZlcnRhIG8gc2FuY2lvbmVzLiIKICAgICAgICByZXR1cm4gc2VsZi5fY29uc3VsdGFyX2lhKHBycm9tcHQsIHRleHRvX3BkZikKCiAgICBkZWYgc2ltdWxhcl9wdW50dWFjaW9uKHNlbGYsIHRleHRvX3BkZik6CiAgICAgICAgcHJvbXB0ID0gIkV4dHJhZSBsYSB0YWJsYSBkZSBDUklURVJJT1MgREUgUFVOVFVBQ0nTT04uIMv/Q3X茨bnRvcyBwdW50b3MgZGFuIHBvciBpbmR1c3RyaWEgbmFjaW9uYWwsIE1pcHltZXMsIHkgZmFjdG9yIHTDqWNuaWNvPyIKICAgICAgICByZXR1cm4gc2VsZi5fY29uc3VsdGFyX2lhKHBycm9tcHQsIHRleHRvX3BkZikKCiAgICBkZWYgYW5hbGl6YXJfcHJvY2Vzb19jb21wbGV0byhzZWxmLCB0ZXh0b19wZGYpOgogICAgICAgIHByb21wdCA9ICJBbmFsaXphIGVzdGUgcGxpZWdvIHkgZ2VuZXJhIHVuIHJlc3VtZW4gZWplY3V0aXZvIFNJRUwgY29uOiAxLiBPYmpldG8sIDIuIFByZXN1cHVlc3RvLCAzLiBGZWNoYXMgY2xhdmUsIDQuIEluZGljYWRvcmVzIEZpbmFuY2llcm9zIHJlcXVlcmlkb3MuIgogICAgICAgIHJldHVybiBzZWxmLl9jb25zdWx0YXJfaWEocHJvbXB0LCB0ZXh0b19wZGYpCg==
+import google.generativeai as genai
+import os
+
+class TenderModule:
+    def __init__(self):
+        # 1. PEGA TU LLAVE AQUÍ (sin espacios)
+        api_key = "TU_LLAVE_DE_AI_STUDIO_AQUI".strip()
+        genai.configure(api_key=api_key)
+        
+        # 2. Definimos el modelo de forma limpia
+        # Usamos el nombre corto para evitar el error 404 de la v1beta
+        self.model = genai.GenerativeModel('gemini-1.5-flash')
+
+    def analizar_proceso_completo(self, texto_pdf):
+        # Limitamos el texto para que no se bloquee por tamaño
+        prompt = f"Analiza los puntos clave de este pliego de licitación: {texto_pdf[:20000]}"
+        
+        try:
+            # Intento de generación con el modelo actual
+            response = self.model.generate_content(prompt)
+            return response.text
+        except Exception as e:
+            # Si falla, intentamos con el nombre técnico alternativo
+            try:
+                model_alt = genai.GenerativeModel('models/gemini-1.5-flash')
+                response = model_alt.generate_content(prompt)
+                return response.text
+            except Exception as e2:
+                return f"❌ Error de conexión: {str(e2)}. Verifica tu API Key en Google AI Studio."
