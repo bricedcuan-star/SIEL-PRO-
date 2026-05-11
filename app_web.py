@@ -26,43 +26,42 @@ st.markdown("""
         background: white;
         border-radius: 5px;
         box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        white-space: pre-wrap;
     }
     </style>
     """, unsafe_allow_html=True)
 
-# 3. Lógica de la IA (Integrada para evitar errores de importación)
+# 3. Lógica de la IA (Ahora lee los SECRETS correctamente)
 class SIELBrain:
     def __init__(self):
-        api_key = os.getenv("GOOGLE_API_KEY", "AIzaSyARZgTTSfCuH-hHtEPAns062tC3Nzn-QoQ")
+        # Intentamos buscar la clave en los Secrets de Streamlit primero
+        if "GEMINI_API_KEY" in st.secrets:
+            api_key = st.secrets["GEMINI_API_KEY"]
+        else:
+            # Si no está en secrets, busca en variables de entorno o usa la que dejaste
+            api_key = os.getenv("GOOGLE_API_KEY", "TU_CLAVE_AQUI")
+        
         genai.configure(api_key=api_key.strip())
-        # Intentamos con 1.5 flash, si no con pro
-        try:
-            self.model = genai.GenerativeModel('gemini-1.5-flash')
-        except:
-            self.model = genai.GenerativeModel('gemini-pro')
+        self.model = genai.GenerativeModel('gemini-1.5-flash')
 
     def consultar(self, prompt, texto):
         try:
-            contenido = f"{prompt}\n\nTEXTO DEL PLIEGO:\n{texto[:100000]}"
+            # Para pliegos largos, cortamos el texto para no saturar la IA
+            contenido = f"{prompt}\n\nTEXTO DEL PLIEGO (Extracto):\n{texto[:30000]}"
             response = self.model.generate_content(contenido)
             return response.text
         except Exception as e:
-            # Fallback a gemini-pro si falla flash
-            try:
-                alt_model = genai.GenerativeModel('gemini-pro')
-                response = alt_model.generate_content(f"{prompt}\n\nTEXTO:\n{texto[:30000]}")
-                return response.text
-            except:
-                return f"❌ Error de IA: {str(e)}. Verifica tu API Key en Google AI Studio."
+            return f"❌ Error de IA: {str(e)}. Revisa que la clave en Secrets sea correcta."
 
+# Inicializamos la IA
 try:
     siel_ia = SIELBrain()
     motor_listo = True
 except Exception as e:
-    st.error(f"Error al inicializar SIEL: {e}")
+    st.error(f"Error al conectar con la IA: {e}")
     motor_listo = False
 
-# 4. Barra Lateral - Navegación y Seguridad
+# 4. Barra Lateral
 with st.sidebar:
     st.title("📂 SIEL Pro")
     st.markdown("---")
@@ -75,7 +74,6 @@ with st.sidebar:
             "📊 Viabilidad del Proceso",
             "⚠️ Evaluación de Riesgos",
             "🏆 Simulador de Puntuación",
-            "✅ Checklist Documental",
             "🤖 Asistente IA"
         ])
     else:
@@ -88,33 +86,38 @@ with st.sidebar:
 
 # 5. Ejecución de Módulos
 if modulo:
-    st.title(f"Monitor de Licitaciones — {modulo}")
+    st.title(f"{modulo}")
     archivo = st.file_uploader("Sube el pliego de condiciones (PDF)", type="pdf")
 
     if archivo and motor_listo:
         if st.button("🚀 INICIAR ANÁLISIS ESTRATÉGICO"):
-            with st.spinner("Analizando el proceso con SIEL Pro..."):
-                reader = PdfReader(archivo)
-                texto_pdf = "".join([p.extract_text() for p in reader.pages])
-                
-                if modulo == "🔍 Lectura de Pliegos":
-                    prompt = "Analiza este pliego y genera un resumen SIEL con: Objeto, Presupuesto, Fechas clave e Indicadores Financieros."
-                elif modulo == "📊 Viabilidad del Proceso":
-                    prompt = "Evalúa la VIABILIDAD de este proceso. ¿Es rentable? ¿Qué requisitos técnicos y financieros son los más difíciles?"
-                elif modulo == "⚠️ Evaluación de Riesgos":
-                    prompt = "Identifica RIESGOS jurídicos, financieros o técnicos en este pliego."
-                elif modulo == "🏆 Simulador de Puntuación":
-                    prompt = "Extrae los CRITERIOS DE PUNTUACIÓN (Industria nacional, Mipymes, etc)."
-                else:
-                    prompt = "Brinda consejos estratégicos para ganar esta licitación según el pliego."
+            with st.spinner("SIEL Pro está leyendo el pliego..."):
+                try:
+                    # Leemos el PDF
+                    reader = PdfReader(archivo)
+                    texto_pdf = ""
+                    for page in reader.pages:
+                        texto_pdf += page.extract_text()
+                    
+                    # Configuramos el prompt según el módulo elegido
+                    if modulo == "🔍 Lectura de Pliegos":
+                        prompt = "Extrae: Objeto, Presupuesto, Fechas clave e Indicadores Financieros (Liquidez, Endeudamiento)."
+                    elif modulo == "📊 Viabilidad del Proceso":
+                        prompt = "Analiza si este proceso es viable financieramente y qué tan difícil es cumplir los requisitos."
+                    elif modulo == "⚠️ Evaluación de Riesgos":
+                        prompt = "Busca cláusulas peligrosas, multas o requisitos que parezcan 'pliegos sastre'."
+                    else:
+                        prompt = "Resume los puntos más importantes para decidir si participamos o no."
 
-                resultado = siel_ia.consultar(prompt, texto_pdf)
-                
-                st.subheader("Resultado del Análisis")
-                st.markdown(f'<div class="resaltado">{resultado}</div>', unsafe_allow_html=True)
-                st.download_button("Descargar Reporte", resultado, file_name=f"SIEL_{modulo}.txt")
+                    # Llamada a la IA
+                    resultado = siel_ia.consultar(prompt, texto_pdf)
+                    
+                    st.subheader("Dictamen de la IA")
+                    st.markdown(f'<div class="resaltado">{resultado}</div>', unsafe_allow_html=True)
+                except Exception as e:
+                    st.error(f"Hubo un problema al leer el PDF: {e}")
     else:
-        st.info("📩 Para comenzar, sube el PDF del pliego.")
+        st.info("📩 Sube un archivo PDF para que la IA lo analice.")
 else:
     st.title("Bienvenido a SIEL Pro")
-    st.warning("🔒 Ingrese la clave de acceso para desbloquear las herramientas.")
+    st.warning("🔒 Ingrese la clave de acceso en la barra lateral.")
