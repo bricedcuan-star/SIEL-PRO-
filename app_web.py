@@ -34,35 +34,29 @@ st.markdown("""
 # 3. Lógica de la IA (Ahora lee los SECRETS correctamente)
 class SIELBrain:
     def __init__(self):
-        # Buscamos la clave en los Secrets de Streamlit
+        # 1. Buscamos la clave en los Secrets que configuraste
         api_key = st.secrets.get("GEMINI_API_KEY")
         
         if api_key:
-            # Forzamos la configuración para evitar el error v1beta
+            # 2. Configuración estándar (evita forzar v1beta)
             genai.configure(api_key=api_key.strip())
-            # Usamos el nombre del modelo sin sufijos raros
+            # 3. Usamos el modelo estable 1.5 Flash
             self.model = genai.GenerativeModel('gemini-1.5-flash')
         else:
-            st.error("🔑 Error: No se detecta la clave 'GEMINI_API_KEY' en los Secrets.")
+            st.error("🔑 Error: No se detecta la clave 'GEMINI_API_KEY' en Secrets.")
 
     def consultar(self, prompt, texto):
         try:
-            # Enviamos el contenido. Si el PDF es muy largo, Gemini 1.5 lo maneja bien.
-            # Limitamos a 50k caracteres para asegurar rapidez
-            contenido = f"{prompt}\n\nTEXTO DEL PLIEGO:\n{texto[:50000]}"
+            # Para pliegos largos de 500 páginas, enviamos un bloque sólido de texto
+            # Gemini 1.5 Flash tiene una ventana de contexto enorme, así que 100k caracteres está bien.
+            contenido = f"{prompt}\n\nTEXTO DEL PLIEGO:\n{texto[:100000]}"
             
-            # El truco: No especificar la versión de la API en la llamada
+            # Llamada directa sin parámetros de versión antiguos
             response = self.model.generate_content(contenido)
             return response.text
         except Exception as e:
-            # Si el error persiste, probamos con el modelo Pro automático
-            try:
-                model_alt = genai.GenerativeModel('gemini-pro')
-                response = model_alt.generate_content(f"{prompt}\n\nTEXTO:\n{texto[:20000]}")
-                return response.text
-            except:
-                return f"❌ Error de conexión con Google: {str(e)}. Intenta reiniciar la App."
-
+            # Si falla, el error 404 suele ser por la librería desactualizada
+            return f"❌ Error de conexión: {str(e)}. Verifica que 'google-generativeai' sea la versión 0.7.2 o superior."
 # Inicializamos la IA
 try:
     siel_ia = SIELBrain()
