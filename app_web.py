@@ -11,7 +11,9 @@ def inicializar_ia():
     try:
         api_key = st.secrets.get("GEMINI_API_KEY", "")
         if api_key:
+            # Forzamos la configuración para que no use rutas viejas
             genai.configure(api_key=api_key.strip())
+            # Usamos el modelo sin prefijos de versión
             return genai.GenerativeModel('gemini-1.5-flash')
     except Exception:
         return None
